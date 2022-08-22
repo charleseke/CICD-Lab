@@ -118,7 +118,7 @@ resource "aws_instance" "Jenkins-Server" {
 
 # Create EC2 Instance that auto installs/configures Ansible as the Control Server
 
-resource "aws_instance" "Ansible-Control-Server" {
+/*resource "aws_instance" "Ansible-Control-Server" {
   ami           = var.ami
   instance_type = var.instance_type
   key_name = "ServerKey"
@@ -131,11 +131,11 @@ resource "aws_instance" "Ansible-Control-Server" {
   tags = {
     Name = "Ansible-Control-Server"
   }
-}
+}*/
 
 # Create EC2 Instance that auto installs/configures Docker as the Ansible Managed Node/DockerHost (App Server)
 
-resource "aws_instance" "Ansible-MN-DockerHost" {
+resource "aws_instance" "Application-Server" {
   ami           = var.ami
   instance_type = var.instance_type
   key_name = "ServerKey"
@@ -146,7 +146,7 @@ resource "aws_instance" "Ansible-MN-DockerHost" {
   user_data = file("./Docker.sh")
 
   tags = {
-    Name = "Ansible-MN-DockerHost"
+    Name = "Application-Server"
   }
 }
 

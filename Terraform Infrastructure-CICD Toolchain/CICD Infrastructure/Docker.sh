@@ -1,11 +1,5 @@
 #! /bin/bash
 
-# add ansibleadmin user
-useradd ansibleadmin
-# set password for ansibleadmin
-echo "ansibleansible" | passwd --stdin ansibleadmin
-# set ansibleadmin as sudoers
-echo 'ansibleadmin     ALL=(ALL)      NOPASSWD: ALL' | sudo tee -a /etc/sudoers
 # set ec2-user as sudoers
 echo 'ec2-user     ALL=(ALL)      NOPASSWD: ALL' | sudo tee -a /etc/sudoers 
 # enable ssh passwordless authentication
@@ -19,8 +13,8 @@ yum update -y
 amazon-linux-extras install docker -y
 # Start the Docker service.
 service docker start
-# Add the ansibleadmin to the docker group so you can execute Docker commands without using sudo.
-usermod -a -G docker ansibleadmin
+# Add the ec2-user to the docker group so you can execute Docker commands without using sudo.
+usermod -a -G docker ec2-user
 # Configure Docker to start on boot
 sudo systemctl enable docker
 # Install docker-py
