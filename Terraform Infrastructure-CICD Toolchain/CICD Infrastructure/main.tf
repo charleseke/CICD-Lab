@@ -1,5 +1,5 @@
 /* This template provisions a VPC with a public subnet, internet gateway, route tables and their associations, security groups,
-and EC2 instances to host DevOps toolchain. (Jenkins, Ansible, Docker) */
+and EC2 instances to host DevOps toolchain. (Jenkins and Docker) */
 
 terraform {
     required_providers {
@@ -116,24 +116,7 @@ resource "aws_instance" "Jenkins-Server" {
   }
 }
 
-# Create EC2 Instance that auto installs/configures Ansible as the Control Server
-
-/*resource "aws_instance" "Ansible-Control-Server" {
-  ami           = var.ami
-  instance_type = var.instance_type
-  key_name = "ServerKey"
-  availability_zone = "us-east-1a"
-  vpc_security_group_ids = [aws_security_group.CICD-SG.id]
-  subnet_id = aws_subnet.CICD-Subnet1.id
-  associate_public_ip_address = true
-  user_data = file("./InstallAnsibleCN.sh")
-
-  tags = {
-    Name = "Ansible-Control-Server"
-  }
-}*/
-
-# Create EC2 Instance that auto installs/configures Docker as the Ansible Managed Node/DockerHost (App Server)
+# Create EC2 Instance that auto installs/configures Docker at launch using user-data  as the Application Server
 
 resource "aws_instance" "Application-Server" {
   ami           = var.ami
